@@ -1,4 +1,6 @@
 pymysql
 numpy
 Flask
-
+setproctitle==1.2.1
+numpy
+six
