@@ -22,29 +22,29 @@ _sql = None
 
 class MySql:
     def __init__(self):
-        self.date_base = None
+        self.data_base = None
         try:
-            self.date_base = pymysql.connect(host=mysql_global_setting.get_value('host'),
+            self.data_base = pymysql.connect(host=mysql_global_setting.get_value('host'),
                              user=mysql_global_setting.get_value('user'),
                              password=mysql_global_setting.get_value('password'),
                              database=mysql_global_setting.get_value('database'),
                              charset=mysql_global_setting.get_value('charset'))
-            self.cursor = self.date_base.cursor()
+            self.cursor = self.data_base.cursor()
         except Exception as e:
             print(e)
 
     def select(self, cmd):
-        if self.date_base is None:
+        if self.data_base is None:
             return "mysql connect error!"
         self.cursor.execute(cmd)
         result = self.cursor.fetchall()
         return result
 
     def terminate(self):
-        if self.date_base is None:
+        if self.data_base is None:
             return
         self.cursor.close()
-        self.date_base.close()
+        self.data_base.close()
 
 
 def start():
