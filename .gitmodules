@@ -1,3 +1,3 @@
-[submodule "front"]
-	path = front
-	url = git@github.com:kekexilinan/echars.git
+[submodule "web"]
+	path = web
+	url = git@github.com:Anoyer/echars.git
