@@ -29,7 +29,7 @@ class MySql:
                              password=mysql_global_setting.get_value('password'),
                              database=mysql_global_setting.get_value('database'),
                              charset=mysql_global_setting.get_value('charset'))
-            self.cursor = self.data_base.cursor()
+            self.cursor = self.data_base.cursor(cursor=pymysql.cursors.DictCursor)
         except Exception as e:
             print(e)
 
