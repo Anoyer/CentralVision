@@ -8,7 +8,8 @@
 __all__ = [
     "read_json_value_from_file",
     "read_json_from_file",
-    "write_json_to_file"
+    "write_json_to_file",
+    "keyword_to_py"
 ]
 
 
@@ -40,11 +41,11 @@ def read_json_from_file(path_of_file):
     except json.decoder.JSONDecodeError as jde:
         print("ReadJsonFromFile: ", jde)
 
-        return None
+        return {}
     except IOError as ioe:
         print("ReadJsonFromFile: ", ioe)
 
-        return None
+        return {}
 
 
 def write_json_to_file(path_of_file, dict_):
@@ -59,4 +60,16 @@ def write_json_to_file(path_of_file, dict_):
                 ',',
                 ': '))
 
+
+# echarts等关键字段变为py风格命名
+def keyword_to_py(keyword):
+    py_word = ""
+    for ch in keyword:
+        if 'A' <= ch <= 'Z':
+            py_word += f"_{chr(ord(ch) + 32)}"
+        elif ch == ' ':
+            py_word += '_'
+        else:
+            py_word += ch
+    return py_word
 
