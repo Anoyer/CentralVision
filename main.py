@@ -7,7 +7,7 @@
 
 import pymysql
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 
 from SQLtools import mysql
 from SQLtools.common import get_option
@@ -27,7 +27,7 @@ def hello(usr_id: int):
     return f"{usr_id} {result}"
 
 
-@app.route('/table-config/')
+@app.route('/api/table-config/')
 def get_table_config():
     config_table_list = table_global_setting.get_all_table_config()
     config_table_api_dict = {"os_name": config_table_list.get("os_name"), "table_group": {}}
@@ -36,21 +36,25 @@ def get_table_config():
         if table.get("group_name") not in config_table_api_dict["table_group"]:
             config_table_api_dict["table_group"][table["group_name"]] = []
         config_table_api_dict["table_group"][table["group_name"]].append(table_dict)
-    return jsonify(config_table_api_dict)
+    response = make_response(jsonify(config_table_api_dict))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
-@app.route('/select/<int:table_uid>')
+@app.route('/api/select/<int:table_uid>')
 def get_data(table_uid: int):
     # TODO: 根据table_name 去调用<sql函数>，获取响应的option数据
     option = get_option(table_uid)
-    return jsonify(option)
+    response = make_response(jsonify(option))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 if __name__ == "__main__":
     mysql_global_setting.load_data()
     table_global_setting.load_data()
     mysql.start()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
     #
     # sql = """
     #     SELECT * from test
