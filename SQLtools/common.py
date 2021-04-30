@@ -26,8 +26,8 @@ def get_option(table_uid: int):
                                 f"sql_table_list[series_obj['data_name']], "
                                 f"series_obj.get('table_name'))"))
 
-    print(table_dict)
-    print(sql_table_list)
+    # print(table_dict)
+    # print(sql_table_list)
     option_data = option.get_option(table_dict.get('name', ''),
                                     sql_table_list[table_dict['xAxis'][0]['data_name']],
                                     series_list)
